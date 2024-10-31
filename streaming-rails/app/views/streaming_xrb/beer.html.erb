@@ -1,0 +1,6 @@
+<% provide(:title, 'Beer') %>
+<% provide(:head, "") %>
+<!-- This is a simple example of a streaming template. It will render the text "Hello" 10 times, with a 1 second pause between each render. -->
+<% 10.times do; sleep 1 %>
+<p>Hello</p>
+<% end %>
