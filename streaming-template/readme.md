@@ -14,17 +14,16 @@ Check the streaming output:
 
 ``` bash
 $ curl --insecure -N https://localhost:9292
-<!DOCTYPE html><html><head><title>Beer Song</title></head><body>
-  <p>99 bottles of beer on the wall</br>
-     99 bottles of beer</br>
-     take one down, and pass it around</br>
-     98 bottles of beer on the wall</br></p>
-  <p>98 bottles of beer on the wall</br>
-     98 bottles of beer</br>
-     take one down, and pass it around</br>
-     97 bottles of beer on the wall</br></p>
-  <p>97 bottles of beer on the wall</br>
-     97 bottles of beer</br>
-     take one down, and pass it around</br>
-     96 bottles of beer on the wall</br></p>
+<!doctype html><html><head><title>Green Bottles Song</title></head><body>
+	<p>10 green bottles hanging on the wall,</br>
+		10 green bottles hanging on the wall,</br>
+		and if one green bottle should accidentally fall,</br>
+		there'll be 9 green bottles hanging on the wall.</br>
+	</p>
+	<p>9 green bottles hanging on the wall,</br>
+		9 green bottles hanging on the wall,</br>
+		and if one green bottle should accidentally fall,</br>
+		there'll be 8 green bottles hanging on the wall.</br>
+	</p>
+...
 ```

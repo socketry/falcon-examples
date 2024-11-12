@@ -1,24 +1,14 @@
-require 'csv'
+require 'digest'
 
 run do |env|
-	request = Rack::Request.new(env)
+	input = env['rack.input']
 	
-	body = proc do |stream|
-		csv = CSV.new(stream)
-		
-		csv << ['Minimum', 'Maximum', 'Average']
-		
-		csv.each do |row|
-			numbers = row.map(&:to_f)
-			minimum, maximum = numbers.minmax
-			average = numbers.sum / numbers.size
-			
-			csv << [minimum, maximum, average]
-		end
-	rescue => error
-	ensure
-		stream.close(error)
+	checksum = Digest::SHA256.new
+	
+	# Read each chunk at a time, to avoid buffering the entire file in memory:
+	input.each do |chunk|
+		checksum.update(chunk)
 	end
 	
-	[200, {'content-type' => 'text/csv'}, body]
+	[200, {'content-type' => 'text/csv'}, [checksum.hexdigest]]
 end

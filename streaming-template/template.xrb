@@ -1,8 +1,10 @@
-<!doctype html><html><head><title>Beer Song</title></head><body>
+<!doctype html><html><head><title>Green Bottles Song</title></head><body>
 	<?r self[:count].downto(1) do |i| ?>
-	<p>#{i} bottles of beer on the wall</br>
-		<?r sleep 1 ?>#{i} bottles of beer</br>
-		<?r sleep 1 ?>take one down, and pass it around</br>
-		<?r sleep 1 ?>#{(i-1)} bottles of beer on the wall</br></p>
+	<p>#{i} green bottles hanging on the wall,</br>
+		<?r sleep 1 ?>#{i} green bottles hanging on the wall,</br>
+		<?r sleep 1 ?>and if one green bottle should accidentally fall,</br>
+		<?r sleep 1 ?>there'll be #{(i-1)} green bottles hanging on the wall.</br>
+		<?r sleep 1 ?>
+	</p>
 	<?r end ?>
 </body></html>

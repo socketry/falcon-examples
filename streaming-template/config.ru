@@ -5,7 +5,7 @@ TEMPLATE = XRB::Template.load_file("template.xrb")
 run do |env|
 	scope = {
 		count: env['QUERY_STRING'].then do |query_string|
-			query_string.empty? ? 99 : Integer(query_string)
+			query_string.empty? ? 10 : Integer(query_string)
 		end
 	}
 	

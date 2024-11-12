@@ -1,6 +1,6 @@
-# Streaming Server-Sent Events (SSE)
+# Streaming WebSockets
 
-This example shows how to stream events to a client using Server-Sent Events (SSE).
+This example shows how to use WebSockets to stream data to a browser.
 
 ## Usage
 

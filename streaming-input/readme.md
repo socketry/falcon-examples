@@ -1,6 +1,6 @@
 # Streaming Input
 
-This example shows how to stream CSV records as input.
+This example shows how to upload a file to compute it's checksum.
 
 ## Usage
 
@@ -14,12 +14,6 @@ $ bundle exec falcon
 Then run the client:
 
 ``` bash
-$ ./client.rb https://localhost:9292
-Minimum,Maximum,Average
-1,2,3
-1.0,3.0,2.0
-1,10,100
-1.0,100.0,37.0
+$ curl --insecure -X POST --data-binary @config.ru httpss://localhost:9292
+f97a5502301d41c3ca77599468e40d186e4d245f83c925e08f731e8276b008a0
 ```
-
-Type some numbers like `1,2,3` and press enter to see the minimum, maximum and average. Press `Ctrl-D` to finish the input.

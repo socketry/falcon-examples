@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+	<head>
+		<title>WebSockets</title>
+	</head>
+	
+	<body>
+		<h1>WebSocket Messages</h1>
+		<div id="history"></div>
+		<script type="text/javascript">
+			var url = window.location.href.replace('http', 'ws');
+			var webSocket = new WebSocket(url);
+			
+			webSocket.onmessage = function(event) {
+				var history = document.getElementById('history');
+				history.innerHTML += '<p>' + event.data + '</p>';
+			};
+		</script>
+	</body>
+</html>
