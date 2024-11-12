@@ -6,16 +6,18 @@
 	
 	<body>
 		<h1>SSE Messages</h1>
-		<div id="history"></div>
+		<ul id="messages"></ul>
 		<script type="text/javascript">
-			var eventSource = new EventSource("events");
-			eventSource.addEventListener("message", function(event) {
-				var container = document.createElement("p");
+			const history = document.getElementById('messages');
+			const eventSource = new EventSource("events");
+			
+			eventSource.onmessage = (event) => {
+				const container = document.createElement("li");
 				container.innerText = event.data;
-				var history = document.querySelector("#history");
-				history.appendChild(container);
-				history.scrollTop = history.scrollHeight;
-			});
+				
+				messages.appendChild(container);
+				messages.scrollTop = messages.scrollHeight;
+			};
 		</script>
 	</body>
 </html>
