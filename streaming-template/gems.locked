@@ -59,7 +59,7 @@ GEM
       json (~> 2)
       samovar (~> 2.1)
     protocol-hpack (1.5.1)
-    protocol-http (0.43.0)
+    protocol-http (0.44.0)
     protocol-http1 (0.28.1)
       protocol-http (~> 0.22)
     protocol-http2 (0.20.0)
@@ -85,4 +85,4 @@ DEPENDENCIES
   xrb
 
 BUNDLED WITH
-   2.5.17
+   2.5.22

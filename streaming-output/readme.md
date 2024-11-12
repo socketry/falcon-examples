@@ -14,7 +14,7 @@ $ bundle exec falcon
 Then stream the output:
 
 ``` bash
-$  curl --insecure -N https://localhost:9292
+$ curl --insecure https://localhost:9292
 Date,Time
 2024-11-11,16:58:13
 2024-11-11,16:58:14

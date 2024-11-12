@@ -13,7 +13,7 @@ $ bundle exec falcon
 Check the streaming output:
 
 ``` bash
-$ curl --insecure -N https://localhost:9292
+$ curl --insecure https://localhost:9292
 <!doctype html><html><head><title>Green Bottles Song</title></head><body>
 	<p>10 green bottles hanging on the wall,</br>
 		10 green bottles hanging on the wall,</br>
