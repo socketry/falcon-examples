@@ -27,3 +27,45 @@ $ curl --insecure https://localhost:9292
 	</p>
 ...
 ```
+
+## ERB Templates
+
+You can modify this example to use streaming ERB templates:
+
+``` ruby
+require "erb"
+
+class StreamingERB
+	COMPILER = ERB::Compiler.new('<>').tap do |compiler|
+		compiler.pre_cmd << "proc{|_erbout|"
+		compiler.put_cmd = "_erbout<<"
+		compiler.insert_cmd = "_erbout<<"
+		compiler.post_cmd << "}"
+	end
+	
+	def initialize(path)
+		@path = path
+		@code = nil
+		@compiled = nil
+	end
+	
+	def code
+		@code ||= COMPILER.compile(File.read(@path)).first
+	end
+	
+	def compiled(binding = self.binding)
+		@compiled ||= eval(self.code, binding, @path, 0)
+	end
+	
+	def to_proc(scope)
+		proc do |stream|
+			scope.instance_exec(stream, &compiled)
+		rescue => error
+		ensure
+			stream.close(error)
+		end
+	end
+end
+
+TEMPLATE = StreamingERB.new("template.erb")
+```

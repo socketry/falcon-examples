@@ -1,0 +1,10 @@
+<!doctype html><html><head><title>Green Bottles Song</title></head><body>
+	<% self[:count].downto(1) do |i| %>
+	<p><%= i %> green bottles hanging on the wall,<br>
+		<% sleep 1 %><%= i %> green bottles hanging on the wall,<br>
+		<% sleep 1 %>and if one green bottle should accidentally fall,<br>
+		<% sleep 1 %>there'll be <%= i - 1 %> green bottles hanging on the wall.<br>
+		<% sleep 1 %>
+	</p>
+	<% end %>
+</body></html>
