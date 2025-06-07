@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Sinatra SSE Pub/Sub</title>
+		<style>
+			body { font-family: Arial, sans-serif; margin: 40px; }
+			#messages { 
+				border: 1px solid #ccc; 
+				height: 300px; 
+				overflow-y: auto; 
+				padding: 10px; 
+				background: #f9f9f9; 
+			}
+			.message { 
+				margin: 5px 0; 
+				padding: 5px; 
+				background: white; 
+				border-radius: 3px; 
+			}
+			.timestamp { 
+				color: #999; 
+				font-size: 0.8em; 
+			}
+			#messageForm { 
+				margin: 20px 0; 
+			}
+			input, button { 
+				padding: 8px; 
+				margin: 5px; 
+			}
+			#messageInput { 
+				width: 300px; 
+			}
+		</style>
+	</head>
+	
+	<body>
+		<h1>Sinatra SSE Pub/Sub Example</h1>
+		<p>This demonstrates server-sent events with pub/sub functionality.</p>
+		
+		<div id="messageForm">
+			<input type="text" id="messageInput" placeholder="Enter a message to broadcast...">
+			<button onclick="sendMessage()">Broadcast Message</button>
+		</div>
+		
+		<h2>Live Messages:</h2>
+		<div id="messages"></div>
+		
+		<script type="text/javascript">
+			const messages = document.getElementById('messages');
+			const messageInput = document.getElementById('messageInput');
+			const eventSource = new EventSource("/events");
+			
+			eventSource.onmessage = (event) => {
+				const data = JSON.parse(event.data);
+				const container = document.createElement("div");
+				container.className = 'message';
+				
+				container.innerHTML = `
+					<span class="timestamp">[${data.timestamp}]</span> 
+					${data.text}
+				`;
+				
+				messages.appendChild(container);
+				messages.scrollTop = messages.scrollHeight;
+			};
+			
+			eventSource.onerror = (event) => {
+				console.error('EventSource failed:', event);
+			};
+			
+			function sendMessage() {
+				const message = messageInput.value.trim();
+				if (message) {
+					fetch('/broadcast', {
+						method: 'POST',
+						body: message
+					});
+					messageInput.value = '';
+				}
+			}
+			
+			// Allow Enter key to send message
+			messageInput.addEventListener('keypress', (e) => {
+				if (e.key === 'Enter') {
+					sendMessage();
+				}
+			});
+		</script>
+	</body>
+</html>
