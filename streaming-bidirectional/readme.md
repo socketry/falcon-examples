@@ -1,4 +1,4 @@
-# Streaming Bi-directinoal
+# Streaming Bi-directional
 
 This example shows how to use Falcon to create a bi-directional streaming connection between a client and a server, implementing a simple chat server.
 
