@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>S3 Streaming File Upload</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #333;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+    form {
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    .file-input {
+      margin: 1rem 0;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #progress-container {
+      margin-top: 1rem;
+      display: none;
+    }
+    progress {
+      width: 100%;
+      height: 20px;
+    }
+    #result {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-left: 4px solid #4CAF50;
+      background-color: #f1f8e9;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>S3 Streaming File Upload</h1>
+  <p>This example demonstrates how to stream file uploads directly to S3 without storing the entire file in memory.</p>
+  
+  <form id="upload-form" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="files">Select files to upload:</label>
+      <input type="file" id="files" name="files" multiple class="file-input">
+    </div>
+    
+    <button type="submit">Upload Files</button>
+  </form>
+  
+  <div id="progress-container">
+    <p>Uploading...</p>
+    <progress id="progress" value="0" max="100"></progress>
+  </div>
+  
+  <div id="result"></div>
+  
+  <script>
+    document.getElementById('upload-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const fileInput = document.getElementById('files');
+      if (fileInput.files.length === 0) {
+        alert('Please select at least one file to upload');
+        return;
+      }
+      
+      const formData = new FormData();
+      for (const file of fileInput.files) {
+        formData.append('files', file);
+      }
+      
+      const progressContainer = document.getElementById('progress-container');
+      const progress = document.getElementById('progress');
+      const result = document.getElementById('result');
+      
+      progressContainer.style.display = 'block';
+      result.style.display = 'none';
+      
+      try {
+        const response = await fetch('/', {
+          method: 'POST',
+          body: formData,
+        });
+        
+        progressContainer.style.display = 'none';
+        
+        if (response.ok) {
+          const data = await response.json();
+          result.innerHTML = '<h3>Upload Complete</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        } else {
+          const errorText = await response.text();
+          result.innerHTML = '<h3>Upload Failed</h3><p>' + errorText + '</p>';
+        }
+        
+        result.style.display = 'block';
+      } catch (error) {
+        progressContainer.style.display = 'none';
+        result.innerHTML = '<h3>Error</h3><p>' + error.message + '</p>';
+        result.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
