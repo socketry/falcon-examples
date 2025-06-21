@@ -28,7 +28,7 @@ class SSEApp < Sinatra::Base
 					out << "data: #{message}\n\n"
 				end
 			rescue => error
-				puts "Connection error: #{error}"
+				Console.error(self, error)
 			end
 		end
 	end
@@ -49,7 +49,7 @@ class SSEApp < Sinatra::Base
 			begin
 				queue << message
 			rescue => error
-				puts "Failed to send to client: #{error}"
+				Console.error(self, error)
 			end
 		end
 
